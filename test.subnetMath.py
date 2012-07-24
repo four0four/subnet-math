@@ -1,9 +1,9 @@
 #!/usr/bin/python2
 
-import networkClasses
+import subnetMath
 
-#test = networkClasses.Subnet("192.168.0.1","255.255.0.0")
-test = networkClasses.Subnet("192.168.0.1/16")
+#test = subnetMath.Subnet("192.168.0.1","255.255.0.0")
+test = subnetMath.Subnet("192.168.0.1/16")
 print ".toIPaddress(): " + str(test.toIPaddress())
 print ".toBroadcast(): " + str(test.toBroadcast())
 print ".toNetmask(): " + str(test.toNetmask())
