@@ -20,6 +20,19 @@ class Subnet:
             self.netmask = self.splitCombined()[2]
             self.broadcast = self.toBroadcast()
 
+    #All of these return strings, and are intended for external consumption
+    def ipString(self):     #naming this sucks
+        return ".".join(map(str,self.IP))
+    def netmaskString(self):
+        return ".".join(map(str,self.netmask))
+    def broadcastString(self):
+        return ".".join(map(str,self.broadcast))
+    def subnetString(self):
+        return self.toSubnet() #just for symmetry
+    def subnetZeroedString(self):
+        return self.toSubnetZeroed()
+
+    #All of these return list elements, except for the subnet
     def toIPaddress(self):
         self.IP = self.subnet.partition('/')[0].split('.')
         return self.IP
