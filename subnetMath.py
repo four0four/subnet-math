@@ -30,8 +30,8 @@ class Subnet:
 
     def toBroadcast(self):
         self.broadcast = ['0','0','0','0']
-        netmask_octets = self.netmask.split('.')
-        ip_octets = self.IP.split('.')
+        netmask_octets = self.netmask
+        ip_octets = self.IP
         for octet in range(4):
             self.broadcast[octet] = ((~int(netmask_octets[octet])) & 0xFF) | int(ip_octets[octet])
         return ".".join(map(str,self.broadcast))
@@ -57,32 +57,27 @@ class Subnet:
             for i in range(7,7-(netmask_bits - filled),-1):
                 tmp |= (1<<i)
             netmask_octets[partial_octet] = tmp
-        netmask = ".".join(map(str,netmask_octets))
         return(ip_string,ip_octets,netmask_octets,netmask)
 
     def toSubnetZeroed(self):
         subnet = ""
         count = 0
-        netmask_octets = self.netmask.split('.')
-        ip_octets = self.IP.split('.')
-        for octet in netmask_octets:
+        for octet in self.netmask:
             count += countBits(int(octet))
-        for octet in range(len(ip_octets)-1):
-            subnet += (str(int(ip_octets[octet]) & int(netmask_octets[octet]))) + '.'
-        subnet += str(int(ip_octets[len(ip_octets)-1]) & int(netmask_octets[len(netmask_octets)-1]))
+        for octet in range(len(self.IP)-1):
+            subnet += (str(int(self.IP[octet]) & int(self.netmask[octet]))) + '.'
+        subnet += str(int(self.IP[len(self.IP)-1]) & int(self.netmask[len(self.netmask)-1]))
         subnet += '/' + str(count)
         return subnet
 
     def toSubnet(self):
         subnet = ""
         count = 0
-        netmask_octets = self.netmask.split('.')
-        ip_octets = self.IP.split('.')
-        for octet in netmask_octets:
+        for octet in self.netmask:
             count += countBits(int(octet))
-        for octet in range(len(ip_octets) - 1):
+        for octet in range(len(self.IP)-1):
             subnet += str(self.IP[octet]) + '.'
-        subnet += str(ip_octets[len(ip_octets)-1])
+        subnet += str(self.IP[len(self.IP)-1])
         subnet += '/' + str(count)
         return subnet
 
